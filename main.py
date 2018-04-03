@@ -17,7 +17,7 @@ log = list()
 log.append('------------------------')
 log.append(' ')
 log.append(datetime.datetime.now())
-with open("replylist.csv", 'r+', newline='') as csvfile:
+with open("replylist.csv", 'r+') as csvfile:
     reader = csv.reader(csvfile, delimiter =',')   
     for row in reader:
         threadlist.append(row)
@@ -38,14 +38,14 @@ for submission in subreddit.new(limit=10):
     data = data.replace("%BIO%", bio)
     try:
         submission.reply(data)
-        with open("replylist.csv", 'a', newline='') as csvfile:
+        with open("replylist.csv", 'a') as csvfile:
             wr = csv.writer(csvfile, dialect='excel', delimiter = ',')
             wr.writerow([submission.id])
-        log.append(data)
+        log.append(data.encode('utf-8').strip())
         print(data)
     except praw.exceptions.APIException as exc:
         log.append(exc.message)
-with open("redditlog.log", 'a', newline='') as logfile:
+with open("redditlog.log", 'a') as logfile:
     wr = csv.writer(logfile)
     for row in log:
         wr.writerow([row])
