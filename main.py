@@ -22,7 +22,7 @@ with open("replylist.csv", 'r+') as csvfile:
     for row in reader:
         threadlist.append(row)
 log.append('posted list loaded')
-for submission in subreddit.new(limit=20):   
+for submission in subreddit.new(limit=10):   
     if "twitter.com/" not in submission.url or [submission.id] in threadlist:
         print(submission.id + ' - skipped')
         log.append(submission.id + ' - skipped')
