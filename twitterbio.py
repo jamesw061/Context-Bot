@@ -15,4 +15,8 @@ def getBio( session , screenname ):
     if usr.verified:
         vtxt = " ^verified"    
     return 'Twitter Name: ['+ usr.name +'](https://twitter.com/' + usr.screen_name + ')' + vtxt + ' Reach: ' + str(usr.followers_count) + '\n' + '\n' + 'Bio: ' + usr.description
-        
+
+def getUser( session, id ):
+    tweet = session.get_status(id)
+    username = tweet.user.screen_name
+    return username

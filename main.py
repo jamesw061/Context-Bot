@@ -22,7 +22,7 @@ with open("replylist.csv", 'r+') as csvfile:
     for row in reader:
         threadlist.append(row)
 log.append('posted list loaded')
-for submission in subreddit.new(limit=10):   
+for submission in subreddit.new(limit=20):   
     if "twitter.com/" not in submission.url or [submission.id] in threadlist:
         print(submission.id + ' - skipped')
         log.append(submission.id + ' - skipped')
@@ -31,6 +31,8 @@ for submission in subreddit.new(limit=10):
         data = file1.read()
     log.append('New thread')
     sn = re.search(r".com/(\w+)", submission.url).group(1)
+    if "twitter.com/twitter/statuses/" in submission.url:
+        sn = twitbio.getUser(session, re.search(r".statuses/(\w+)", submission.url).group(1))       
     bio = twitbio.getBio(session, sn)
     snip = ""
     snip = re.search(r"[\w\.-]+@[\w\.-]+", bio)
