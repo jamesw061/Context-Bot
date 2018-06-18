@@ -12,9 +12,12 @@ def auth():
 def getBio( session , screenname ):   
     usr = session.get_user(screenname)
     vtxt = " ^unverified"
+    loc = ""
+    if usr.location:
+        loc = ' Location: ' + usr.location
     if usr.verified:
         vtxt = " ^verified"    
-    return 'Twitter Name: ['+ usr.name +'](https://twitter.com/' + usr.screen_name + ')' + vtxt + ' Reach: ' + str(usr.followers_count) + '\n' + '\n' + 'Bio: ' + usr.description
+    return 'Twitter Name: ['+ usr.name +'](https://twitter.com/' + usr.screen_name + ')' + vtxt + ' Reach: ' + str(usr.followers_count) + loc + '\n' + '\n' + 'Bio: ' + usr.description
 
 def getUser( session, id ):
     tweet = session.get_status(id)
