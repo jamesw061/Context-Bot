@@ -34,9 +34,9 @@ for submission in subreddit.new(limit=10):
     if "twitter.com/twitter/statuses/" in submission.url:
         sn = twitbio.getUser(session, re.search(r".statuses/(\w+)", submission.url).group(1))       
     bio = twitbio.getBio(session, sn)
-    snip = ""
-    snip = re.search(r"[\w\.-]+@[\w\.-]+", bio)
-    if snip :bio = bio.replace(snip.group(0), " - ")
+    pattern = re.compile(r"[\w\.-]+@[\w\.-]+|[+0-9-\ ]{11,20}")
+    for match in re.findall(pattern, bio):
+        bio = bio.replace(match, " - ")
     data = data.replace("%BIO%", bio)
     try:
         submission.reply(data)
