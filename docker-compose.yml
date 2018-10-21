@@ -1,0 +1,8 @@
+version: '2.1'
+
+services:
+  context-bot:
+    image: context-bot
+    build: .
+    ports:
+      - 3000:3000
