@@ -19,10 +19,16 @@ for submission in subreddit.stream.submissions():
         print(submission.id + ' - skipped')
         continue
     for comment in submission.comments:
+        if not isinstance(comment, praw.models.Comment):
+            skip = True
+            break
+        if comment.body == '[deleted]' or comment.body == '[removed]':
+            continue
         if comment.author.name == "ContextualRobot":
             skip = True
             break
     if skip == True:
+        print(submission.id + ' - skipped')
         continue
     with open('boilerplate.txt', 'r') as file1:
         data = file1.read()
